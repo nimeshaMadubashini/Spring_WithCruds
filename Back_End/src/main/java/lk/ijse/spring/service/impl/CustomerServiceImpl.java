@@ -65,4 +65,9 @@ customerRepo.deleteById(id);
         }
 customerRepo.save(modelMapper.map(c, Customer.class));
     }
+
+    @Override
+    public List<String> loadCusId() {
+        return customerRepo.loadCusId();
+    }
 }

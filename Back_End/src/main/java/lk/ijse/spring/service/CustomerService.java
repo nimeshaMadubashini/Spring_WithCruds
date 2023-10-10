@@ -1,6 +1,7 @@
 package lk.ijse.spring.service;
 
 import lk.ijse.spring.dto.CustomerDTO;
+import lk.ijse.spring.entity.Customer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,5 +23,6 @@ public interface CustomerService {
 
     @PutMapping
     public void updateCustomer(@RequestBody CustomerDTO c);
-
+@GetMapping(path = "/one")
+List<String> loadCusId();
 }

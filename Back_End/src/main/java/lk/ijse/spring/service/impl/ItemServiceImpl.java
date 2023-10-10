@@ -62,4 +62,9 @@ public class ItemServiceImpl implements ItemService {
         }
         itemRepo.save(modelMapper.map(c, Item.class));
     }
+    @Override
+    public List<String> loadId(){
+        List<String> list = itemRepo.loadItemCode();
+        return list;
+    }
 }

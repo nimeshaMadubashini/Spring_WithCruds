@@ -24,7 +24,7 @@ public class ItemController {
     }
 
     @DeleteMapping(params = {"code"})
-    public ResponseUtill DeleteItem(@RequestParam("code") String code){
+    public ResponseUtill DeleteItem( String code){
         itemService.DeleteItem(code);
         return new ResponseUtill("ok","delete Successfull", code);
     }
@@ -36,14 +36,19 @@ public class ItemController {
         List<ItemDTO> all = itemService.getAll();
         return new ResponseUtill("ok","load All Successfull",all);
     }
-    @GetMapping(params = {"id"})
-    public ResponseUtill searchCustomer(String id){
-        return new ResponseUtill("ok","search Successfull",  itemService.searchItem(id));
+    @GetMapping(params = {"code"})
+    public ResponseUtill searchItem(String code){
+        return new ResponseUtill("ok","search Successfull",  itemService.searchItem(code));
     }
     @PutMapping
     public ResponseUtill updateCustomer(@RequestBody ItemDTO c){
         itemService.updateItem(c);
         return new ResponseUtill("ok","update Successfull",c);
     }
+    @GetMapping(path = "/one")
+    public  ResponseUtill  loadItemId(){
+        List<String> list = itemService.loadId();
+        return new ResponseUtill("ok","load Successfull",list);
 
+    }
 }

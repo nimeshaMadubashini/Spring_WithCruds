@@ -1,6 +1,7 @@
 package lk.ijse.spring.controller;
 
 import lk.ijse.spring.dto.CustomerDTO;
+import lk.ijse.spring.entity.Customer;
 import lk.ijse.spring.service.CustomerService;
 import lk.ijse.spring.utill.ResponseUtill;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class CustomerController {
        return new ResponseUtill("ok","save Successfull",dto) ;
     }
 
-    @DeleteMapping(params = {"id"})
-    public  ResponseUtill DeleteCustomer(String id){
+    @DeleteMapping("/{id}")
+    public ResponseUtill DeleteCustomer(@PathVariable String id) {
         customerService.DeleteCustomer(id);
-        return  new ResponseUtill("ok","delete Successfull",id);
+        return new ResponseUtill("ok", "delete Successfull", id);
     }
 
     @GetMapping
@@ -44,5 +45,9 @@ public class CustomerController {
         return new ResponseUtill("ok","update Successfull",c);
     }
 
+@GetMapping(path = "/one")
+public  ResponseUtill loadCusId(){
+        return new ResponseUtill("ok","load CusID Successfull",customerService.loadCusId());
 
+}
 }

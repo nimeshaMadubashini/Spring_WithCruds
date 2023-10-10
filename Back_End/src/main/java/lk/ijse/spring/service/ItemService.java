@@ -21,4 +21,6 @@ public interface ItemService {
 
     @PutMapping
     public void updateItem(@RequestBody ItemDTO c);
+    @GetMapping(path = "/one")
+    public List<String> loadId();
 }
