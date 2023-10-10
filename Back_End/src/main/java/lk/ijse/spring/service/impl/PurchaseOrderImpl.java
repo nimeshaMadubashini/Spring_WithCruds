@@ -29,19 +29,18 @@ public class PurchaseOrderImpl implements PurchaseOrderService {
     ModelMapper modelMapper;
     @Override
     public void purchaseOrder(OrdersDTO dto) {
-       if (orderRepo.existsById(dto.getOid())) {
-           throw new RuntimeException(dto.getOid() + "Is already exists");
-       }
-        Orders map = modelMapper.map(dto, Orders.class);
-         orderRepo.save(map);
-        List<OrderDetailsDTO> orderDetails = dto.getOrderDetails();
-        for (OrderDetailsDTO d:orderDetails) {
-            OrderDetails map1 = modelMapper.map(d, OrderDetails.class);
-            orderDetailRepo.save(map1);
-            Item byCode = itemRepo.findByCode(d.getItemCode());
-            int qtyOnHand = byCode.getQtyOnHand();
-            itemRepo.UpdateQty(qtyOnHand-d.getQty(), d.getItemCode());
-        }
+        if (!orderRepo.existsById(dto.getOid())) {
+            Orders map = modelMapper.map(dto, Orders.class);
+            orderRepo.save(map);
+            if(dto.getOrderDetails().size()<1)throw new RuntimeException("No Item");
+            for (OrderDetails o:map.getOrderDetails()) {
+                Item item = itemRepo.findById(o.getItemCode()).get();
+                item.setQtyOnHand(item.getQtyOnHand()-o.getQty());
+                itemRepo.save(item);
+            }
 
+        }else {
+            throw new RuntimeException("PurchaseOrder fail");
+        }
     }
 }
